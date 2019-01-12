@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
   ulimits = [docker.types.Ulimit(name="STACK", soft=1048576, hard=1048576)]
 
-  logs = client.containers.run("polygon-package-downloader",
+  logs = client.containers.run("polygon-package-downloader:v1",
                                cpuset_cpus=cpu_set,
                                environment=environments,
                                mem_limit="4g",
