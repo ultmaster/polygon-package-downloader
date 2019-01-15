@@ -44,14 +44,17 @@ def run_package():
 
 
 if __name__ == "__main__":
-  api_key = os.environ["KEY"]
-  api_secret = os.environ["SECRET"]
+  api_key = os.environ.get("KEY", "")
+  api_secret = os.environ.get("SECRET", "")
   problem_id = os.environ.get("PROBLEM_ID", "")
   time_limit = float(os.environ.get("TIME_LIMIT", 3600))
 
-  del os.environ["KEY"]
-  del os.environ["SECRET"]
-  del os.environ["PROBLEM_ID"]
+  if api_key:
+    del os.environ["KEY"]
+  if api_secret:
+    del os.environ["SECRET"]
+  if problem_id:
+    del os.environ["PROBLEM_ID"]
   logger.debug(os.environ)
 
   proxy = os.environ.get("PROXY", "")

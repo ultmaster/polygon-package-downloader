@@ -7,23 +7,21 @@ import docker
 
 
 if __name__ == "__main__":
-  api_key = sys.argv[1]
-  api_secret = sys.argv[2]
-  problem_id = sys.argv[3]
-  destination_location = sys.argv[4]
+  if len(sys.argv) >= 5:
+    api_key = sys.argv[1]
+    api_secret = sys.argv[2]
+    problem_id = sys.argv[3]
+    destination_location = sys.argv[4]
+    environments = {
+      "KEY": api_key,
+      "SECRET": api_secret,
+      "PROBLEM_ID": problem_id
+    }
+  else:
+    destination_location = sys.argv[1]
+    environments = {"NON_FETCH": "1"}
+
   client = docker.from_env()
-
-  cpu_count = os.cpu_count() or 1
-  if cpu_count >= 2:
-    cpu_count = cpu_count // 2
-  cpu_set = ','.join(map(str, range(cpu_count)))
-
-  environments = {
-    "KEY": api_key,
-    "SECRET": api_secret,
-    "PROBLEM_ID": problem_id
-  }
-
   logs = client.containers.run("registry.cn-hangzhou.aliyuncs.com/ultmaster/polygon-package-downloader:latest",
                                environment=environments,
                                volumes={destination_location: {"bind": "/store", "mode": "rw"}})
