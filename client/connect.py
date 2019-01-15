@@ -24,14 +24,8 @@ if __name__ == "__main__":
     "PROBLEM_ID": problem_id
   }
 
-  ulimits = [docker.types.Ulimit(name="STACK", soft=1048576, hard=1048576)]
-
   logs = client.containers.run("registry.cn-hangzhou.aliyuncs.com/ultmaster/polygon-package-downloader:latest",
-                               cpuset_cpus=cpu_set,
                                environment=environments,
-                               mem_limit="4g",
-                               pids_limit=65535,
-                               ulimits=ulimits,
                                volumes={destination_location: {"bind": "/store", "mode": "rw"}})
 
   with open(os.path.join(destination_location, "logs/docker.log"), "wb") as f:

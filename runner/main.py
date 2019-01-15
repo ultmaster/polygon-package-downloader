@@ -55,5 +55,6 @@ if __name__ == "__main__":
   logger.debug(os.environ)
 
   proxy = os.environ.get("PROXY", "")
-  fetch_package(problem_id)
+  if "NON_FETCH" not in os.environ:
+    fetch_package(problem_id)
   run_package()
