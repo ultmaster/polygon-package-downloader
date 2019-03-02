@@ -1,5 +1,5 @@
 import os
-from logging import getLogger, DEBUG, FileHandler, Formatter, WARNING
+from logging import getLogger, DEBUG, FileHandler, Formatter, INFO
 
 logger = getLogger("logger")
 
@@ -13,4 +13,4 @@ fh.setFormatter(formatter)
 if "DEBUG" in os.environ:
   logger.setLevel(DEBUG)
 else:
-  logger.setLevel(WARNING)
+  logger.setLevel(INFO)
